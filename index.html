@@ -4,13 +4,13 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
     <link href="https://code.getmdl.io/1.3.0/material.red-blue.min.css" rel="stylesheet"></link>
     <script defer="defer" src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <title>Project Proposal</title>
+    <title>Final Deliverables</title>
   </head>
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header">
         <div class="custom_header_row mdl-layout__header-row">
-          <span class="mdl-layout-title">Project Proposal</span>
+          <span class="mdl-layout-title">Final Deliverables</span>
             </button>
           </div>
         </div>
@@ -22,42 +22,129 @@
         <br>
         <h2 align="middle">Escape from Planet Eshleman </h2>
         <h5 align="middle">  Marcus Lee, 25812787; Michael Lu, 25464293; Noah Lopez, 25709092 </h5>
-        <h4 align="middle">Summary  </h4>
-        <p align="middle"> You wake up in a prison tower on an abandoned planet. <br> In order to escape, you must progress up through randomized levels all the way to the top of the tower. <br> At the top of the tower is a spaceship which you pilot to shoot baddies and escape the planet. </p>
+        <h4 align="middle">Abstract </h4>
+        <p align="middle"> "Escape from Planet Eshelman" is a first person shooter game built on THREE.js. The core mechanics of the game incorporate ray-tracing intersection logic and material bidirectional reflectance distribution functions (BRDFs). The player picks different weapons to shoot enemies with different material/BRDF types in order to destroy them. The lasers shot reflect off the enemies according to their material type. Reflected lasers can hit other enemies or you. The goal of the game is to properly destroy all the enemies and pick up the treasure box at the end.  </p>
 
-        <h4 align="middle">Problem Description </h4>
-        <p align="middle"> We wish to design a game that is optimized for web browsers (and mobile?), with reasonable AI for the non-player characters as well as randomization of levels such that each playthrough is unique.
+        <h4 align="middle">Technical approach </h4>
+        <p align="middle"> We started our project with a very vague idea to build an "OpenGL/WebGL" game. This game was to be a dungeon style FPS with AI, random level design, and a space shooter finale. However, when we got are first round of feedback we realized we were not incorporating a technical challenge relating to what we learned in class. Furthermore, we didn't want to reinvent several wheels with building an entire rendering engine or whatnot. For example instead using a library like THREE.js we were planning to build an entire game engine from OpenGl. Therefore, we decided on building our game on THREE.js with raytracing as its core gameplay mechanic. <br> <br>
 
-		In this regard, WebGL provides a good framework to build games (in either 2D or 3D) that load quickly on browser and can be made for mobile as well. WebGL is built on top of JavaScript and GLSL, which from Project 3-2 we know loads quickly and processes shaders quickly as well. The main challenges then are designing the AI and the levels, 1. So that they work, and 2. That they are randomized to a reasonable degree.
- 		</p>
 
- 		<h4 align="middle"> Goals and Deliverables </h4>
-        <p align="middle"> 1) We will deliver a fully functional game. However, we expect the quality of 3D models, and length of the game to possibly be somewhat lacking. At the very least, assets and levels load, and the player should be able to interact with the world (e.g. fight bad guys, pick up items, etc).<br>
+        Moving forward with this idea, we initially split the work into three portions: exploring materials/BRDFs, designing character models, and implementing raygun logic. It turns out that THREE.js has a rich library for creating and customizing materials and textures. We modelled BRDFs through their physical appearance and checked for their "material" property solving our first task. Next, THREE.js also has integration with Blender so that we could easily import complex models into a THREE.js scene, solving are second task. Finally, our greatest challenge was determining our raygun logic, since THREE had no built methods for handling raytracing. Initially our raygun logic was very crude and only supported cube intersection. To improve our raygun's functionality we ported raytracing code from project 3-2. Specifically, BSDF sampling for Diffuse, Glass, and Mirror materials; triangle intersections; and recursive ray bouncing. After implementing these modifications, our intersection code was robust and gameplay ready! <br> <br> 
 
-		2) We hope to deliver a fully functional game with a wide variety of game modes, many levels and beautiful 3D models. In particular, we hope to implement both the dungeon/prison portion and the spaceship shooter portion, with working controls and proper interaction.
 
- 		</p>
+        We faced numerous issues along the way including raygun tracking, browser discrepancies and of course raygun logic. To implement raygun tracking, we had to update the gun model's position relative to the camera every time the camera moved. This update occurs within the animation loop of THREE. We encountered issues with updating the position of the gun in relation to rendering the entire scene, so for example we had our randomly generated objects stack on top of each other because the update occurred before the render. Once we fixed this ordering, the gun stuck to the camera position and everything loaded normally. As mentioned before, our raygun logic was initially primitive and limited to cube's, we solved this problem by integrating our knowledge from previous projects to make intersections look and feel more realistic. During development, in order to test our code we had to host our own mini servers and play with our game on browser. We had issues where loading our game on Safari vs Chrome had major discrepancies, such as textures not loading properly on one or the other, or lasers being drawn differently. To solve this problem we decided to stay consistent and test on just one browser, and also maintained strict git discipline. <br> <br>
 
- 		<h4 align="middle"> Schedule </h4>
-        <p align="middle"> Each week we will meet up twice once during the week for 1.5 hours and once on the weekend for another 1.5. During the first meeting we <br>will divide a weeks goal into tasks and start them together. During the second we help each other complete unfinished tasks.<br><br>
 
-		Week 1 Goal: Design front end. Sketch wireframes build basic 3D models etc.<br>
-		Week 2 Goal: Build games backend. Gameplay mechanics i.e. implement controls etc. <br>
-		Week 3 Goal: Refine backend and frontend.<br>
-		Week 4 Goal: Work on poster and video. <br>
+        Building this project was certainly a deep and engaging learning experience. One of our greatest challenges and hence most enriching lessons was narrowing down our ideas for the game to the begin with. We had all these cool ideas that we had trouble deciding on, and we spent an extra week finalizing our idea before committing to it. The lesson here is definitely to start early and get feedback early, and just pick an idea to go for.
+
+		Furthermore, we really appreciated the effort taken towards developing a game. In particular, getting convincing first-person controls to work was difficult, and creating convincing 3D environments and textures was also a pain. However, we also learned to be efficient, not reinvent the wheel, and now we all have greater depth in the general game development process, building a project in JavaScript and working with the THREE.js library. Taking this project further or building another one in the near future will certainly be more straightforward, and a lot more fun.
+
+		Speaking of which, and lastly, it really made all the difference to work on something we had fun with. We all went into this project with the mindset that we wanted to enjoy it and align it with our passions, and having that higher level motivation really pushed us to build something that beyond our expectations. Matching our passions with our work is truly a rare experience which we will all cherish.
+
+
 
  		</p>
 
+ 		<h4 align="middle"> Results </h4>
+        <p align="middle"> 
 
- 		<h4 align="middle"> Resources </h4>
- 		<p align="middle"> Languages/software/frameworks: javascript, html, css, webGL, Node.js <br>
+        <video align="middle" width="640" height="480" controls>
+        	<source src="./video.mp4" type="video/mp4">
+        	Your browser does not support the video tag.
+      	</video><br>
 
-		WebGL tutorial: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial<br>
-		Game design principles: https://www.gamedesigning.org/learn/game-design-principles/<br>
-		Level design: https://www.gamedesigning.org/learn/level-design/<br>
-		Some Inspiration: https://www.crazygames.com/t/webgl<br>
+
+      	<a href="https://noah-lopez.github.io/final-proj/"> Play the game here!</a><br>
+
+         <div align="middle">
+	      <table style="width=100%">
+	        <tr>
+	          <td>
+	            <img src="./1.png" align="middle" width="400px" height = "360px"/>
+	          <figcaption align="middle"> A mirror enemy with glass raygun.</figcaption>
+	          </td>
+	          <td>
+	            <img src="./2.png" align="middle" width="400px" height = "360px"/>
+	            <figcaption align="middle"> The transportation suitcase. </figcaption>
+	          </td>
+	        </tr>
+	      </table>
+	    </div>
+
+	    <div align="middle">
+	      <table style="width=100%">
+	        <tr>
+	          <td>
+	            <img src="./3.png" align="middle" width="400px" height = "360px"/>
+	            <figcaption align="middle"> A diffuse enemy with mirror raygun. </figcaption>
+	          </td>
+	          <td>
+	            <img src="./4.png" align="middle" width="400px" height = "360px"/>
+	            <figcaption align="middle"> A glass enemy with a glass raygun. </figcaption>
+	          </td>
+	        </tr>
+	      </table>
+	    </div> <br> <br>
+
 
  		</p>
+
+ 		<h4 align="middle"> References </h4>
+        <p align="middle"> 
+        <em> Texture reflection</em> <br>
+        <a href="https://threejs.org/examples/?q=cubemap#webgl_materials_cubemap_balls_reflection">https://threejs.org/examples/?q=cubemap#webgl_materials_cubemap_balls_reflection</a><br>
+        <a href="https://github.com/mrdoob/three.js/blob/master/examples/webgl_materials_cubemap_balls_reflection.html">https://github.com/mrdoob/three.js/blob/master/examples/webgl_materials_cubemap_balls_reflection.html</a> <br><br>
+
+        <em> Texture refraction</em> <br>
+        <a href="https://threejs.org/examples/?q=cubemap#webgl_materials_cubemap_balls_refraction">https://threejs.org/examples/?q=cubemap#webgl_materials_cubemap_balls_refraction</a><br>
+        <a href="https://github.com/mrdoob/three.js/blob/master/examples/webgl_materials_cubemap_balls_refraction.html">https://github.com/mrdoob/three.js/blob/master/examples/webgl_materials_cubemap_balls_refraction.html</a><br><br>
+
+        <em> Project 3-2 (UniformHemisphereSampler3D::get_sample() from sampler.cpp) </em> <br><br>
+
+        <em> Miscellaneous</em> <br>
+        <a href="https://www.youtube.com/watch?v=YKzyhcyAijo&t=19s">https://www.youtube.com/watch?v=YKzyhcyAijo&t=19s </a><br>
+        <a href="http://www.humus.name/index.php?page=Cubemap&item=UnionSquare">http://www.humus.name/index.php?page=Cubemap&item=UnionSquare</a><br>
+
+
+ 		</p>
+
+
+
+
+ 		<h4 align="middle"> Contributions from each team member </h4>
+ 		<p align="middle"> 
+
+ 		<em> Marcus </em> <br>
+ 		Materials application (also building on top of Michael's model work)<br>
+		Textures application<br>
+		BRDF sampler code (in conjunction with Noah)<br>
+		Final presentation slides<br>
+		Portions of each writeup<br>
+		Concept drawings<br>
+		Debugging bad render scenes (in conjunction with Noah)<br><br>
+
+		<em> Noah </em> <br>
+		Arena<br>
+		Level Randomization<br>
+		Timer end game logic (With Michael)<br>
+		Weapon Switch button<br>
+		Ray gun following camera/ Moving rays to cast from gun<br>
+		Initial intersection code for milestone<br>
+		Diffuse BRDF sampler code (with Marcus)<br>
+		Concept drawings<br>
+		Contributed to write ups<br>
+		Constructed html pages for proposal/milestone submissions<br>
+		Edited videos<br>
+		Controls (with Michael)<br><br>
+
+		<em> Michael </em> <br>
+		3D Models in Blender <br>
+		ColladaRaycaster class<br>
+		Recursive raytracing intersection code<br>
+		Glass BRDF sampler code<br>
+		Controls (with Noah)<br>
+
+ 		</p> <br><br>
 
         
 
